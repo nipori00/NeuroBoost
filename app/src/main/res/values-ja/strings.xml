@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">NeuroBoost</string>
+    
+    <!-- Title Screen -->
+    <string name="title_welcome">NeuroBoostへようこそ</string>
+    <string name="title_subtitle">脳を鍛えるトレーニング</string>
+    <string name="button_start">チャレンジ開始</string>
+    <string name="button_history">履歴</string>
+    <string name="label_language">言語</string>
+    
+    <!-- Language Names -->
+    <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    
+    <!-- Math Game Screen -->
+    <string name="game_title">計算チャレンジ</string>
+    <string name="label_time_remaining">残り時間</string>
+    <string name="label_correct">正解</string>
+    <string name="label_incorrect">不正解</string>
+    <string name="label_score">スコア</string>
+    <string name="label_seconds">秒</string>
+    
+    <!-- Result Screen -->
+    <string name="result_title">チャレンジ完了！</string>
+    <string name="result_problems_solved">解いた問題数</string>
+    <string name="result_correct_answers">正解数</string>
+    <string name="result_incorrect_answers">不正解数</string>
+    <string name="result_accuracy">正解率</string>
+    <string name="button_back_home">ホームに戻る</string>
+    <string name="button_play_again">もう一度</string>
+    <string name="result_excellent">素晴らしい！</string>
+    <string name="result_great">よくできました！</string>
+    <string name="result_good">頑張りました！</string>
+    <string name="result_keep_practicing">練習を続けましょう！</string>
+</resources>

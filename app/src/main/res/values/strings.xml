@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">NeuroBoost</string>
+    
+    <!-- Title Screen -->
+    <string name="title_welcome">Welcome to NeuroBoost</string>
+    <string name="title_subtitle">Brain Training for a Sharper Mind</string>
+    <string name="button_start">Start Challenge</string>
+    <string name="button_history">History</string>
+    <string name="label_language">Language</string>
+    
+    <!-- Language Names -->
+    <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    
+    <!-- Math Game Screen -->
+    <string name="game_title">Math Challenge</string>
+    <string name="label_time_remaining">Time Remaining</string>
+    <string name="label_correct">Correct</string>
+    <string name="label_incorrect">Incorrect</string>
+    <string name="label_score">Score</string>
+    <string name="label_seconds">seconds</string>
+    
+    <!-- Result Screen -->
+    <string name="result_title">Challenge Complete!</string>
+    <string name="result_problems_solved">Problems Solved</string>
+    <string name="result_correct_answers">Correct Answers</string>
+    <string name="result_incorrect_answers">Incorrect Answers</string>
+    <string name="result_accuracy">Accuracy</string>
+    <string name="button_back_home">Back to Home</string>
+    <string name="button_play_again">Play Again</string>
+    <string name="result_excellent">Excellent!</string>
+    <string name="result_great">Great Job!</string>
+    <string name="result_good">Good Effort!</string>
+    <string name="result_keep_practicing">Keep Practicing!</string>
+</resources>

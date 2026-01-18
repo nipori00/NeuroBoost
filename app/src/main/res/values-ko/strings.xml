@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">NeuroBoost</string>
+    
+    <!-- Title Screen -->
+    <string name="title_welcome">NeuroBoost에 오신 것을 환영합니다</string>
+    <string name="title_subtitle">더 날카로운 두뇌를 위한 훈련</string>
+    <string name="button_start">도전 시작</string>
+    <string name="button_history">기록</string>
+    <string name="label_language">언어</string>
+    
+    <!-- Language Names -->
+    <string name="language_english">English</string>
+    <string name="language_japanese">日本語</string>
+    <string name="language_korean">한국어</string>
+    
+    <!-- Math Game Screen -->
+    <string name="game_title">수학 도전</string>
+    <string name="label_time_remaining">남은 시간</string>
+    <string name="label_correct">정답</string>
+    <string name="label_incorrect">오답</string>
+    <string name="label_score">점수</string>
+    <string name="label_seconds">초</string>
+    
+    <!-- Result Screen -->
+    <string name="result_title">도전 완료!</string>
+    <string name="result_problems_solved">해결한 문제</string>
+    <string name="result_correct_answers">정답 수</string>
+    <string name="result_incorrect_answers">오답 수</string>
+    <string name="result_accuracy">정확도</string>
+    <string name="button_back_home">홈으로</string>
+    <string name="button_play_again">다시 하기</string>
+    <string name="result_excellent">훌륭합니다!</string>
+    <string name="result_great">잘 하셨습니다!</string>
+    <string name="result_good">좋은 노력입니다!</string>
+    <string name="result_keep_practicing">계속 연습하세요!</string>
+</resources>
