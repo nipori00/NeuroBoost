@@ -14,16 +14,30 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class MathGameViewModel : ViewModel() {
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+
+import keio.nipori.neuroboost.utils.HistoryManager
+import keio.nipori.neuroboost.utils.ProgressManager
+
+class MathGameViewModel(application: Application) : AndroidViewModel(application) {
+    private val historyManager = HistoryManager(application)
     private val _gameState = MutableStateFlow(GameState())
     val gameState: StateFlow<GameState> = _gameState.asStateFlow()
 
     private val _gameResult = MutableStateFlow<GameResult?>(null)
     val gameResult: StateFlow<GameResult?> = _gameResult.asStateFlow()
 
+    private val progressManager by lazy { ProgressManager(application) } // Lazy to avoid init order issues if any, or just direct. 
+    // Actually direct is fine since strict ordering isn't an issue here usually.
+    // private val historyManager = HistoryManager(application) // Already there
+
+    private var currentProblemId: String? = null
     private var timerJob: Job? = null
 
-    fun startGame() {
+    fun startGame(problemId: String? = null) {
+        currentProblemId = problemId
         // Reset game state
         _gameState.value = GameState(
             isGameActive = true,
@@ -44,8 +58,11 @@ class MathGameViewModel : ViewModel() {
     fun submitAnswer(answer: Int) {
         val currentState = _gameState.value
         val currentProblem = currentState.currentProblem ?: return
+        val isCorrect = answer == currentProblem.correctAnswer
 
-        if (answer == currentProblem.correctAnswer) {
+        // Removed per-problem history tracking as requested
+
+        if (isCorrect) {
             _gameState.value = currentState.copy(
                 correctCount = currentState.correctCount + 1,
                 totalProblems = currentState.totalProblems + 1
@@ -62,8 +79,26 @@ class MathGameViewModel : ViewModel() {
             generateNewProblem()
         }
     }
+    
+    private fun getOperationSymbol(operation: MathOperation): String {
+        return when (operation) {
+            MathOperation.ADDITION -> "+"
+            MathOperation.SUBTRACTION -> "-"
+            MathOperation.MULTIPLICATION -> "×"
+            MathOperation.DIVISION -> "÷"
+        }
+    }
 
     private fun generateNewProblem() {
+        // ... (Logic is fine, skipping re-implementation for brevity in replace if not changing)
+        // Wait, I need to keep the generate functions.
+        // It's safer to not replace the whole class if I can avoid it.
+        // But I need to modify `startGame` signature and `endGame` logic.
+        // I will use replace_file_content carefully.
+        
+        // Actually, I'll allow myself to just replace the whole file content block I need?
+        // No, I'll do granular replacements.
+        
         val operation = MathOperation.values().random()
         val problem = when (operation) {
             MathOperation.ADDITION -> generateAddition()
@@ -74,6 +109,8 @@ class MathGameViewModel : ViewModel() {
 
         _gameState.value = _gameState.value.copy(currentProblem = problem)
     }
+
+    // ... (Gen functions hidden) ...
 
     private fun generateAddition(): MathProblem {
         val num1 = Random.nextInt(10, 100)
@@ -145,11 +182,23 @@ class MathGameViewModel : ViewModel() {
         val currentState = _gameState.value
         _gameState.value = currentState.copy(isGameActive = false)
         
-        _gameResult.value = GameResult(
+        val result = GameResult(
+            gameType = "Math Challenge",
             totalProblems = currentState.totalProblems,
             correctAnswers = currentState.correctCount,
-            incorrectAnswers = currentState.incorrectCount
+            incorrectAnswers = currentState.incorrectCount,
+            timestamp = System.currentTimeMillis()
         )
+        
+        _gameResult.value = result
+        
+        // Save to History
+        historyManager.saveGameResult(result)
+        
+        // Check win condition provided logic
+        if (currentProblemId != null && currentState.correctCount > currentState.incorrectCount && currentState.correctCount > 0) {
+             progressManager.markProblemSolved(currentProblemId!!)
+        }
         
         timerJob?.cancel()
     }
@@ -158,6 +207,7 @@ class MathGameViewModel : ViewModel() {
         timerJob?.cancel()
         _gameState.value = GameState()
         _gameResult.value = null
+        currentProblemId = null
     }
 
     override fun onCleared() {

@@ -15,10 +15,13 @@ import keio.nipori.neuroboost.R
 import keio.nipori.neuroboost.ui.theme.DarkBlue
 import keio.nipori.neuroboost.ui.theme.White
 import keio.nipori.neuroboost.ui.theme.AccentBlue
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun TitleScreen(
-    onStartClick: () -> Unit,
+    onStartClick: (keio.nipori.neuroboost.models.Problem) -> Unit,
+    onHistoryClick: () -> Unit,
+    onAllProblemsClick: () -> Unit,
     currentLanguage: String,
     onLanguageChange: (String) -> Unit
 ) {
@@ -60,12 +63,63 @@ fun TitleScreen(
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
-            // Start Button
+            // Top Buttons Row
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // History Button
+                OutlinedButton(
+                    onClick = onHistoryClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(64.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = White,
+                        containerColor = Color.Transparent
+                    ),
+                    border = androidx.compose.foundation.BorderStroke(2.dp, AccentBlue),
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text(
+                        text = "History",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                // All Problems Button
+                OutlinedButton(
+                    onClick = onAllProblemsClick,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(64.dp),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = White,
+                        containerColor = Color.Transparent
+                    ),
+                    border = androidx.compose.foundation.BorderStroke(2.dp, AccentBlue),
+                    shape = MaterialTheme.shapes.medium
+                ) {
+                    Text(
+                        text = "All Problems",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+            }
+            
+            Spacer(modifier = Modifier.height(32.dp))
+
+            // Start Button (Centered/Main)
             Button(
-                onClick = onStartClick,
+                onClick = {
+                    val randomProblem = keio.nipori.neuroboost.data.ProblemRepository.problems.random()
+                    onStartClick(randomProblem)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(64.dp),
+                    .height(80.dp), // Slightly larger to emphasize
                 colors = ButtonDefaults.buttonColors(
                     containerColor = AccentBlue,
                     contentColor = White
@@ -74,8 +128,8 @@ fun TitleScreen(
             ) {
                 Text(
                     text = stringResource(R.string.button_start),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
 

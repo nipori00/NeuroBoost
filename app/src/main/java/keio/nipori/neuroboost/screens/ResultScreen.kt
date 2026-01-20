@@ -77,39 +77,47 @@ fun ResultScreen(
                         .padding(24.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Total Problems
-                    StatRow(
-                        label = stringResource(R.string.result_problems_solved),
-                        value = gameResult.totalProblems.toString(),
-                        color = White
-                    )
+                    if (gameResult.gameType == "Pathfinder") {
+                        StatRow(
+                            label = "Time Taken",
+                            value = "${gameResult.timeTakenSeconds}s",
+                            color = White
+                        )
+                    } else {
+                        // Total Problems
+                        StatRow(
+                            label = stringResource(R.string.result_problems_solved),
+                            value = gameResult.totalProblems.toString(),
+                            color = White
+                        )
 
-                    Divider(color = White.copy(alpha = 0.2f))
+                        Divider(color = White.copy(alpha = 0.2f))
 
-                    // Correct Answers
-                    StatRow(
-                        label = stringResource(R.string.result_correct_answers),
-                        value = gameResult.correctAnswers.toString(),
-                        color = CorrectGreen
-                    )
+                        // Correct Answers
+                        StatRow(
+                            label = stringResource(R.string.result_correct_answers),
+                            value = gameResult.correctAnswers.toString(),
+                            color = CorrectGreen
+                        )
 
-                    Divider(color = White.copy(alpha = 0.2f))
+                        Divider(color = White.copy(alpha = 0.2f))
 
-                    // Incorrect Answers
-                    StatRow(
-                        label = stringResource(R.string.result_incorrect_answers),
-                        value = gameResult.incorrectAnswers.toString(),
-                        color = IncorrectRed
-                    )
+                        // Incorrect Answers
+                        StatRow(
+                            label = stringResource(R.string.result_incorrect_answers),
+                            value = gameResult.incorrectAnswers.toString(),
+                            color = IncorrectRed
+                        )
 
-                    Divider(color = White.copy(alpha = 0.2f))
+                        Divider(color = White.copy(alpha = 0.2f))
 
-                    // Accuracy
-                    StatRow(
-                        label = stringResource(R.string.result_accuracy),
-                        value = "${gameResult.accuracy}%",
-                        color = AccentBlue
-                    )
+                        // Accuracy
+                        StatRow(
+                            label = stringResource(R.string.result_accuracy),
+                            value = "${gameResult.accuracy}%",
+                            color = AccentBlue
+                        )
+                    }
                 }
             }
 

@@ -10,9 +10,12 @@ data class GameState(
 )
 
 data class GameResult(
-    val totalProblems: Int,
-    val correctAnswers: Int,
-    val incorrectAnswers: Int
+    val gameType: String = "Math",
+    val totalProblems: Int = 0,
+    val correctAnswers: Int = 0,
+    val incorrectAnswers: Int = 0,
+    val timestamp: Long = System.currentTimeMillis(),
+    val timeTakenSeconds: Long = 0
 ) {
     val accuracy: Int
         get() = if (totalProblems > 0) {
