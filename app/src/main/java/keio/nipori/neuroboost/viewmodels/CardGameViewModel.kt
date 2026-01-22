@@ -26,14 +26,12 @@ data class CardItem(
 data class CardGameState(
     val sequence: List<CardItem> = emptyList(),
     val options: List<CardItem> = emptyList(),
-    val currentStep: Int = 0, // Which item in the sequence we are asking for?
-    // Actually, usually Memory Sequence shows a sequence, then asks to repeat it.
-    // Simplifying for "30s continuous":
+    val currentStep: Int = 0,
+    
     // 1. Show a sequence (length 3, 4, 5...) for X seconds.
     // 2. Hide.
     // 3. User taps options to reconstruct.
     // 4. If correct, +Score, Next problem.
-    // Let's stick to sequence length 3 for speed in 30s mode, or adaptive.
     
     val phase: GamePhase = GamePhase.MEMORIZE, // MEMORIZE -> RECALL -> FEEDBACK
     val userSequence: MutableList<CardItem> = mutableListOf(),
@@ -200,3 +198,4 @@ class CardGameViewModel(application: Application) : AndroidViewModel(application
         timerJob?.cancel()
     }
 }
+
