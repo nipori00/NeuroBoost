@@ -18,7 +18,7 @@ import kotlin.math.sqrt
 data class PathNode(
     val id: String,
     val text: String,
-    val x: Float, // 0.0 to 1.0 relative coords
+    val x: Float,
     val y: Float,
     var state: NodeState = NodeState.NORMAL
 )
@@ -31,7 +31,7 @@ enum class NodeState {
 
 data class PathfinderState(
     val nodes: List<PathNode> = emptyList(),
-    val completedPath: List<PathNode> = emptyList(), // For drawing lines
+    val completedPath: List<PathNode> = emptyList(),
     val nextIndex: Int = 0,
     val fullSequence: List<String> = emptyList(),
     val isGameActive: Boolean = false,
@@ -55,14 +55,12 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
 
     fun startGame(problemId: String) {
         currentProblemId = problemId
-        initLevel2() // Implementing Level 2 (Switch) as default for "path_1"
+        initLevel2()
     }
 
     private fun initLevel2() {
-        // Sequence: 1, A, 2, B, 3, C...
         val sequence = mutableListOf<String>()
         val numbers = (1..10).map { it.toString() }
-        // Use Roman numeral 'Ⅰ' instead of 'I'
         val letters = ('A'..'J').map { if (it == 'I') "Ⅰ" else it.toString() }
         
         for (i in 0 until 10) {
@@ -70,7 +68,6 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
             sequence.add(letters[i])
         }
         
-        // Generate Nodes
         val nodes = generateNodes(sequence)
         
         _gameState.value = PathfinderState(
@@ -94,11 +91,11 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
                 val x = (10..90).random() / 100f
                 val y = (15..85).random() / 100f
                 
-                // Check collisions
+                
                 var collision = false
                 for (existing in nodes) {
                     val dist = sqrt((x - existing.x).pow(2) + (y - existing.y).pow(2))
-                    if (dist < 0.12f) { // Min distance
+                    if (dist < 0.12f) {
                         collision = true
                         break
                     }
@@ -120,7 +117,6 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
         
         val expected = currentState.fullSequence[currentState.nextIndex]
         if (node.text == expected) {
-            // Correct
             val updatedNodes = currentState.nodes.map { 
                 if (it.text == node.text) it.copy(state = NodeState.CORRECT) else it 
             }
@@ -133,9 +129,7 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
                 nextIndex = currentState.nextIndex + 1
             )
             
-            // Win check
             if (currentState.nextIndex + 1 >= currentState.fullSequence.size) {
-                // Done!
                 _gameState.value = _gameState.value.copy(
                     isGameActive = false,
                     isSolved = true,
@@ -156,11 +150,6 @@ class PathfinderGameViewModel(application: Application) : AndroidViewModel(appli
                 currentProblemId?.let { progressManager.markProblemSolved(it) }
             }
         } else {
-            // Wrong
-            // Flash node red temporarily?
-            // Since we can't easily launch a coroutine to revert state inside a synchronous update block efficiently without flicker,
-            // we will just not add it to path.
-            // But we can trigger a visual cue.
         }
     }
     

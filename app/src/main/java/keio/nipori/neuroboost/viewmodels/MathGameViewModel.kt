@@ -29,9 +29,7 @@ class MathGameViewModel(application: Application) : AndroidViewModel(application
     private val _gameResult = MutableStateFlow<GameResult?>(null)
     val gameResult: StateFlow<GameResult?> = _gameResult.asStateFlow()
 
-    private val progressManager by lazy { ProgressManager(application) } // Lazy to avoid init order issues if any, or just direct. 
-    // Actually direct is fine since strict ordering isn't an issue here usually.
-    // private val historyManager = HistoryManager(application) // Already there
+    private val progressManager by lazy { ProgressManager(application) }
 
     private var currentProblemId: String? = null
     private var timerJob: Job? = null
@@ -90,15 +88,6 @@ class MathGameViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun generateNewProblem() {
-        // ... (Logic is fine, skipping re-implementation for brevity in replace if not changing)
-        // Wait, I need to keep the generate functions.
-        // It's safer to not replace the whole class if I can avoid it.
-        // But I need to modify `startGame` signature and `endGame` logic.
-        // I will use replace_file_content carefully.
-        
-        // Actually, I'll allow myself to just replace the whole file content block I need?
-        // No, I'll do granular replacements.
-        
         val operation = MathOperation.values().random()
         val problem = when (operation) {
             MathOperation.ADDITION -> generateAddition()
@@ -109,8 +98,6 @@ class MathGameViewModel(application: Application) : AndroidViewModel(application
 
         _gameState.value = _gameState.value.copy(currentProblem = problem)
     }
-
-    // ... (Gen functions hidden) ...
 
     private fun generateAddition(): MathProblem {
         val num1 = Random.nextInt(10, 100)

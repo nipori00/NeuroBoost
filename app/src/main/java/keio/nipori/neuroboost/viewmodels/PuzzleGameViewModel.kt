@@ -13,11 +13,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-// Internal state for Puzzle Game
 data class PuzzleState(
-    val currentShapeIndices: List<Int> = emptyList(), // Indices representing shapes
-    val correctShapeIndex: Int = 0, // The index of the shape that fits
-    val targetShapeIndex: Int = 0, // The "hole" shape index
+    val currentShapeIndices: List<Int> = emptyList(),
+    val correctShapeIndex: Int = 0,
+    val targetShapeIndex: Int = 0,
     val options: List<Int> = emptyList(),
     val totalProblems: Int = 0,
     val correctCount: Int = 0,
@@ -34,18 +33,12 @@ class PuzzleGameViewModel(application: Application) : AndroidViewModel(applicati
     private val _gameState = MutableStateFlow(PuzzleState())
     val gameState: StateFlow<PuzzleState> = _gameState.asStateFlow()
     
-    // Add _gameResult if it's missing or re-add it cleanly
     private val _gameResult = MutableStateFlow<GameResult?>(null)
     val gameResult: StateFlow<GameResult?> = _gameResult.asStateFlow()
     
     private var timerJob: Job? = null
     private var currentProblemId: String? = null
 
-    // Shape definitions (conceptual, mapped to UI by index)
-    // 0: Perfect Square
-    // 1: Circle
-    // 2: Triangle
-    // ...
     
     fun startGame(problemId: String) {
         currentProblemId = problemId
@@ -60,12 +53,9 @@ class PuzzleGameViewModel(application: Application) : AndroidViewModel(applicati
     }
     
     private fun generateNewProblem() {
-        // Shapes logic:
-        // Target is simple shape (0, 1, 2)
         val targetId = (0..2).random() 
         val correctKeyId = targetId
         
-        // Options: The 3 basic shapes
         val options = listOf(0, 1, 2).shuffled()
         
         _gameState.value = _gameState.value.copy(

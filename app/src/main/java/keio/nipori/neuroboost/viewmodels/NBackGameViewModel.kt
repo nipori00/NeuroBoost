@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 data class NBackState(
-    val grid: List<Boolean> = List(9) { false }, // 3x3 grid
-    val targetIndex: Int? = null, // Where the square is currently
-    val phase: NBackPhase = NBackPhase.SHOW_A, // SHOW_A -> SHOW_B -> INPUT
+    val grid: List<Boolean> = List(9) { false },
+    val targetIndex: Int? = null,
+    val phase: NBackPhase = NBackPhase.SHOW_A,
     val rounds: Int = 1,
     val maxRounds: Int = 10,
     val score: Int = 0,
@@ -27,9 +27,9 @@ data class NBackState(
 )
 
 enum class NBackPhase {
-    SHOW_A, // First square appearance
-    SHOW_B, // Second square appearance
-    INPUT,  // "Select where the square first appeared"
+    SHOW_A,
+    SHOW_B,
+    INPUT,
     FEEDBACK
 }
 
@@ -61,13 +61,10 @@ class NBackGameViewModel(application: Application) : AndroidViewModel(applicatio
             return
         }
         
-        // Logic: "Squares should appear twice... random spot. Then... Select where the square first appeared"
         val pos1 = (0..8).random()
         var pos2 = (0..8).random()
-        // Allow pos2 == pos1? "Twice in random spot". They can be same or different.
         
         viewModelScope.launch {
-            // Show A
             _gameState.value = _gameState.value.copy(
                 phase = NBackPhase.SHOW_A,
                 targetIndex = pos1,
@@ -77,18 +74,15 @@ class NBackGameViewModel(application: Application) : AndroidViewModel(applicatio
             )
             delay(1000)
             
-            // Brief gap?
             _gameState.value = _gameState.value.copy(targetIndex = null)
             delay(200)
 
-            // Show B
             _gameState.value = _gameState.value.copy(
                 phase = NBackPhase.SHOW_B,
                 targetIndex = pos2
             )
             delay(1000)
             
-            // Input Mode
             _gameState.value = _gameState.value.copy(
                 phase = NBackPhase.INPUT,
                 targetIndex = null,

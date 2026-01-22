@@ -20,7 +20,7 @@ enum class PeripheralLocation { TOP, TOP_RIGHT, RIGHT, BOTTOM_RIGHT, BOTTOM, BOT
 data class SwiftVisionState(
     val centralObject: CentralObject? = null,
     val peripheralLocation: PeripheralLocation? = null,
-    val phase: SwiftVisionPhase = SwiftVisionPhase.SHOW, // SHOW -> INPUT -> FEEDBACK
+    val phase: SwiftVisionPhase = SwiftVisionPhase.SHOW,
     val totalProblems: Int = 0,
     val correctCount: Int = 0,
     val incorrectCount: Int = 0,
@@ -31,7 +31,7 @@ data class SwiftVisionState(
 
 enum class SwiftVisionPhase {
     SHOW,
-    WAIT, // Blank screen ("empty background" as requested)
+    WAIT,
     INPUT_CENTER,
     INPUT_PERIPHERAL,
     FEEDBACK
@@ -67,25 +67,21 @@ class SwiftVisionGameViewModel(application: Application) : AndroidViewModel(appl
         currentPeripheral = PeripheralLocation.values().random()
         
         viewModelScope.launch {
-            // SHOW
             _gameState.value = _gameState.value.copy(
                 phase = SwiftVisionPhase.SHOW,
                 centralObject = currentCentral,
                 peripheralLocation = currentPeripheral,
                 message = ""
             )
-            // Show for short duration (e.g. 500ms? Swift vision is usually fast)
             delay(500)
             
-            // WAIT (Empty background)
             _gameState.value = _gameState.value.copy(
                 phase = SwiftVisionPhase.WAIT,
                 centralObject = null,
                 peripheralLocation = null
             )
-            delay(1000) // "Dummy screen" removed, now just blank wait.
+            delay(1000)
             
-            // INPUT 1: Center
             _gameState.value = _gameState.value.copy(
                 phase = SwiftVisionPhase.INPUT_CENTER,
                 message = "What was in the center?"

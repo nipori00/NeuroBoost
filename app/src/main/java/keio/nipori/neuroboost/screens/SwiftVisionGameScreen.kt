@@ -96,7 +96,7 @@ fun SwiftVisionGameScreen(
                         imageVector = icon,
                         contentDescription = "Center Object",
                         tint = White,
-                        modifier = Modifier.size(60.dp)
+                        modifier = Modifier.size(80.dp)
                     )
                     
                     // Peripheral Dot
@@ -143,7 +143,7 @@ fun SwiftVisionGameScreen(
                                     .background(White.copy(alpha=0.1f), CircleShape)
                                     .border(2.dp, White, CircleShape)
                             ) {
-                                Icon(Icons.Default.DirectionsCar, "Car", tint = White, modifier = Modifier.size(40.dp))
+                                Icon(Icons.Default.DirectionsCar, "Car", tint = White, modifier = Modifier.size(50.dp))
                             }
                             
                             // Truck Button
@@ -154,7 +154,7 @@ fun SwiftVisionGameScreen(
                                     .background(White.copy(alpha=0.1f), CircleShape)
                                     .border(2.dp, White, CircleShape)
                             ) {
-                                Icon(Icons.Default.LocalShipping, "Truck", tint = White, modifier = Modifier.size(40.dp))
+                                Icon(Icons.Default.LocalShipping, "Truck", tint = White, modifier = Modifier.size(50.dp))
                             }
                         }
                     }

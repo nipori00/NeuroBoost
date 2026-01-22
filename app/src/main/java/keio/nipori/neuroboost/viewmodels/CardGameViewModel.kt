@@ -84,14 +84,6 @@ class CardGameViewModel(application: Application) : AndroidViewModel(application
             ) 
         }
         
-        // Options available for user to click to add to their sequence.
-        // We need 4 options? Or just buttons for all possibilities?
-        // "Update the four options accordingly." -> imply 4 choices.
-        // If the sequence consists of shapes/colors, the 4 options must be the possible allowed inputs?
-        // Or 4 possible next items?
-        // Let's interpret: Display the sequence. Use 4 options that ARE the sequence items (shuffled) plus one distractor? 
-        // Or just the sequence items shuffled? "Remember the sequence".
-        // Let's provide 4 options which are distinctive cards, and the sequence is made of them.
         
         val pool = sequence.toMutableList()
         while(pool.size < 4) {
@@ -126,32 +118,16 @@ class CardGameViewModel(application: Application) : AndroidViewModel(application
         val newUserSeq = currentState.userSequence.toMutableList()
         newUserSeq.add(card)
         
-        // Check immediate validity? or wait?
-        // Let's check immediate for "Simon Says" feel or standard memory?
-        // Standard: Wait until full length?
-        // Let's check matching index.
         val currentIndex = newUserSeq.lastIndex
         if (currentIndex < currentState.sequence.size) {
-            // Check if this card matches the one at that index in original sequence
-            // Note: Options might have duplicates if we are just picking shapes/colors?
-            // "CardItem" equality includes ID. If we use shuffled items from sequence, IDs match.
-            // If the user tracks "Red Square" and there are two "Red Squares", handled by ID? 
-            // Ideally visual appearance matches.
-            
-            // To be fair: The user taps the option.
-            
             val expected = currentState.sequence[currentIndex]
-            // Relaxed check: Shape and Color match (ignore ID if distinct options visually identical)
             if (card.shape == expected.shape && card.color == expected.color) {
-                // Correct so far
                 _gameState.value = currentState.copy(userSequence = newUserSeq)
                 
                 if (newUserSeq.size == currentState.sequence.size) {
-                    // Full sequence correct
                     handleResult(true)
                 }
             } else {
-                // Wrong step
                 handleResult(false)
             }
         }

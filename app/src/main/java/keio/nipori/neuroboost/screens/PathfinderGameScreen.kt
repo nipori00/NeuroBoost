@@ -139,8 +139,8 @@ fun NodeView(node: PathNode, width: Float, height: Float, onClick: () -> Unit) {
     
     Box(
         modifier = Modifier
-            .offset(x = xOffset - 20.dp, y = yOffset - 20.dp) // Center the 40dp circle
-            .size(40.dp)
+            .offset(x = xOffset - 25.dp, y = yOffset - 25.dp) // Center the 50dp circle
+            .size(50.dp)
             .background(bgColor, CircleShape)
             .border(2.dp, Color.Black, CircleShape)
             .clickable { onClick() },
@@ -149,7 +149,8 @@ fun NodeView(node: PathNode, width: Float, height: Float, onClick: () -> Unit) {
         Text(
             text = node.text,
             color = Color.Black,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp
         )
     }
 }
